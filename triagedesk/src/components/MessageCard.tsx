@@ -29,10 +29,10 @@ export function MessageCard({ message, onChange }: Props) {
   };
 
   return (
-    <div className="bg-white border rounded-xl p-4 space-y-3 shadow-sm">
+    <div className="space-y-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
       {/* Header row: sender + badges */}
       <div className="flex items-center justify-between">
-        <span className="font-semibold">{message.sender}</span>
+        <span className="font-semibold text-slate-900">{message.sender}</span>
         <div className="flex gap-2">
           <StatusBadge label={message.status} color={statusColor(message.status)} />
           {message.urgency && (
@@ -43,20 +43,20 @@ export function MessageCard({ message, onChange }: Props) {
 
       {/* Flagged warning */}
       {message.flagged && (
-        <div className="bg-yellow-50 border border-yellow-300 text-yellow-800 rounded-lg p-2 text-sm">
+        <div className="rounded-xl border border-amber-300 bg-amber-50 p-2 text-sm text-amber-900">
           ⚠️ Flagged for human review — AI confidence was low or potential injection detected.
         </div>
       )}
 
       {/* Original message */}
       <div>
-        <p className="text-xs text-gray-400 uppercase font-semibold mb-1">Original message</p>
-        <p className="text-gray-700 bg-gray-50 rounded-lg p-3 text-sm">{message.body}</p>
+        <p className="mb-1 text-xs font-semibold uppercase text-slate-500">Original message</p>
+        <p className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700">{message.body}</p>
       </div>
 
       {/* AI classification */}
       {message.category && (
-        <div className="flex gap-4 text-sm text-gray-500">
+        <div className="flex gap-4 text-sm text-slate-500">
           <span>📂 {message.category}</span>
           <span>🎭 {message.sentiment}</span>
         </div>
@@ -65,16 +65,16 @@ export function MessageCard({ message, onChange }: Props) {
       {/* Draft reply — editable if still pending */}
       {message.draftReply && (
         <div>
-          <p className="text-xs text-gray-400 uppercase font-semibold mb-1">AI draft reply</p>
+          <p className="mb-1 text-xs font-semibold uppercase text-slate-500">AI draft reply</p>
           {message.status === "pending_review" ? (
             <textarea
-              className="w-full border rounded-lg p-3 text-sm"
+              className="w-full rounded-xl border border-slate-300 bg-white p-3 text-sm text-slate-800 outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
               rows={3}
               value={editedDraft}
               onChange={(e) => setEditedDraft(e.target.value)}
             />
           ) : (
-            <p className="text-gray-700 bg-gray-50 rounded-lg p-3 text-sm">{message.draftReply}</p>
+            <p className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700">{message.draftReply}</p>
           )}
         </div>
       )}
@@ -85,14 +85,14 @@ export function MessageCard({ message, onChange }: Props) {
           <button
             disabled={loading}
             onClick={() => updateStatus("approved")}
-            className="bg-green-600 text-white rounded-lg px-4 py-2 text-sm hover:bg-green-700 disabled:opacity-50"
+            className="rounded-xl bg-emerald-600 px-4 py-2 text-sm text-white transition hover:bg-emerald-700 disabled:opacity-50"
           >
             ✅ Approve & Send
           </button>
           <button
             disabled={loading}
             onClick={() => updateStatus("rejected")}
-            className="bg-red-500 text-white rounded-lg px-4 py-2 text-sm hover:bg-red-600 disabled:opacity-50"
+            className="rounded-xl bg-rose-500 px-4 py-2 text-sm text-white transition hover:bg-rose-600 disabled:opacity-50"
           >
             ❌ Reject
           </button>
@@ -110,7 +110,7 @@ function StatusBadge({
   color: string;
 }) {
   return (
-    <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${color}`}>
+    <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-medium ${color}`}>
       {label}
     </span>
   );
@@ -119,19 +119,19 @@ function StatusBadge({
 // Helper functions to pick badge colours
 function statusColor(status: string): string {
   switch (status) {
-    case "pending_review": return "bg-yellow-100 text-yellow-800";
-    case "approved":       return "bg-green-100 text-green-800";
-    case "rejected":       return "bg-red-100 text-red-800";
-    case "sent":           return "bg-blue-100 text-blue-800";
-    default:               return "bg-gray-100 text-gray-800";
+    case "pending_review": return "border-amber-200 bg-amber-50 text-amber-700";
+    case "approved":       return "border-emerald-200 bg-emerald-50 text-emerald-700";
+    case "rejected":       return "border-rose-200 bg-rose-50 text-rose-700";
+    case "sent":           return "border-sky-200 bg-sky-50 text-sky-700";
+    default:               return "border-slate-200 bg-slate-100 text-slate-700";
   }
 }
 
 function urgencyColor(urgency: string): string {
   switch (urgency) {
-    case "High":   return "bg-red-100 text-red-800";
-    case "Medium": return "bg-orange-100 text-orange-800";
-    case "Low":    return "bg-green-100 text-green-800";
-    default:       return "bg-gray-100 text-gray-800";
+    case "High":   return "border-rose-200 bg-rose-50 text-rose-700";
+    case "Medium": return "border-orange-200 bg-orange-50 text-orange-700";
+    case "Low":    return "border-emerald-200 bg-emerald-50 text-emerald-700";
+    default:       return "border-slate-200 bg-slate-100 text-slate-700";
   }
 }
