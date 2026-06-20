@@ -28,7 +28,7 @@ This project was built to demonstrate AI integration with proper upstream safegu
 
 ## Demo
 
-[Link to Loom video — add after recording on Day 3]
+https://drive.google.com/file/d/1RGRwFbe9bwuM3zIxcb2NfZi6oRDV-qLC/view?usp=drive_link
 
 ## Running locally
 
